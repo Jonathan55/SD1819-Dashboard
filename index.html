@@ -145,7 +145,7 @@
                 </div>
 
             </div>
-            
+
         </div>
 
         <div class="container" style="margin-top: 80px" v-show="view == 'api'">
@@ -156,6 +156,122 @@
                     <li class="breadcrumb-item text-white">API</li>
                 </ol>
             </nav>
+
+            <h5><span class="badge badge-success rounded-0">GET</span> /api/rooms</h5>
+            <div class="row mb-3">
+
+                <div class="col-md-6 my-2">
+                    <div class="p-2 bg-white">
+                        <h6>Request</h6>
+                    </div>
+                </div>
+
+                <div class="col-md-6 my-2">
+                    <div class="p-2 bg-white">
+                        <h6>Response</h6>
+                        <pre><code>
+[
+    {
+        id: 0,
+        name: 'Piso 0',
+        seats: 20,
+        color: '#ABCDEF'
+    },
+    {
+        id: 1,
+        name: 'Piso 1',
+        seats: 30,
+        color: '#ABCDEF'
+    },
+    ...
+]
+                        </code></pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <h5><span class="badge badge-success rounded-0">GET</span> /api/room/{id}/last-event</h5>
+            <div class="row mb-3">
+
+                <div class="col-md-6 my-2">
+                    <div class="p-2 bg-white">
+                        <h6>Request</h6>
+                    </div>
+                </div>
+
+                <div class="col-md-6 my-2">
+                    <div class="p-2 bg-white">
+                        <h6>Response</h6>
+                        <pre><code>
+{
+    id: 123
+    datetime: '2018-12-01T12:00:00.000Z',
+    type: 'in',
+    empty_seats: 5,
+    occupied_seats: 20
+}
+                        </code></pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <h5><span class="badge badge-success rounded-0">GET</span> /api/room/{id}/events/{from}/{to}</h5>
+            <div class="row mb-3">
+
+                <div class="col-md-6 my-2">
+                    <div class="p-2 bg-white">
+                        <h6>Request</h6>
+                    </div>
+                </div>
+
+                <div class="col-md-6 my-2">
+                    <div class="p-2 bg-white">
+                        <h6>Response</h6>
+                        <pre><code>
+[
+    {
+        id: 123,
+        datetime: '2018-12-01T12:00:00.000Z',
+        type: 'out',
+        empty_seats: 5,
+        occupied_seats: 20
+    },
+    ...
+]
+                        </code></pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <h5><span class="badge badge-success rounded-0">GET</span> /api/room/{id}/predict</h5>
+            <div class="row mb-3">
+
+                <div class="col-md-6 my-2">
+                    <div class="p-2 bg-white">
+                        <h6>Request</h6>
+                    </div>
+                </div>
+
+                <div class="col-md-6 my-2">
+                    <div class="p-2 bg-white">
+                        <h6>Response</h6>
+                        <pre><code>
+[
+    {
+        empty_seats: 5,
+        occupied_seats: 20,
+        datetime: '2018-12-01T13:00:00.000Z'
+    },
+    ...
+]
+                        </code></pre>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
 
@@ -334,65 +450,65 @@
                             }
                         }
                     }),
-                    /*----------------------------------------*/
-                    /*  Occupation History Chart
-                    /*----------------------------------------*/
-                    this.occupation_history_chart = new Chart('occupation-history-chart', {
-                        type: 'line',
-                        options: {
-                            responsive: true,
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    usePointStyle: true
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Ocupação',
-                                fontSize: 16
-                            },
-                            tooltips: {
-                                mode: 'index',
-                                intersect: true
-                            }
-                        }
-                    }),
-                    /*----------------------------------------*/
-                    /*  Occupation Rate History Chart
-                    /*----------------------------------------*/
-                    this.occupation_rate_history_chart = new Chart('occupation-rate-history-chart', {
-                        type: 'line',
-                        options: {
-                            responsive: true,
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    usePointStyle: true
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Taxa de ocupação',
-                                fontSize: 16
-                            },
-                            tooltips: {
-                                mode: 'index',
-                                intersect: true
-                            },
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        min: 0,
-                                        max: 100
+                        /*----------------------------------------*/
+                        /*  Occupation History Chart
+                        /*----------------------------------------*/
+                        this.occupation_history_chart = new Chart('occupation-history-chart', {
+                            type: 'line',
+                            options: {
+                                responsive: true,
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        usePointStyle: true
                                     }
-                                }],
-                                xAxes: [{
-                                    type: 'time'
-                                }]
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Ocupação',
+                                    fontSize: 16
+                                },
+                                tooltips: {
+                                    mode: 'index',
+                                    intersect: true
+                                }
                             }
-                        }
-                    })
+                        }),
+                        /*----------------------------------------*/
+                        /*  Occupation Rate History Chart
+                        /*----------------------------------------*/
+                        this.occupation_rate_history_chart = new Chart('occupation-rate-history-chart', {
+                            type: 'line',
+                            options: {
+                                responsive: true,
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        usePointStyle: true
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Taxa de ocupação',
+                                    fontSize: 16
+                                },
+                                tooltips: {
+                                    mode: 'index',
+                                    intersect: true
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            min: 0,
+                                            max: 100
+                                        }
+                                    }],
+                                    xAxes: [{
+                                        type: 'time'
+                                    }]
+                                }
+                            }
+                        })
                 },
                 fetchData() {
                     console.log('fetchData')
