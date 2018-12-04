@@ -449,66 +449,66 @@
                                 }]
                             }
                         }
-                    }),
-                        /*----------------------------------------*/
-                        /*  Occupation History Chart
-                        /*----------------------------------------*/
-                        this.occupation_history_chart = new Chart('occupation-history-chart', {
-                            type: 'line',
-                            options: {
-                                responsive: true,
-                                legend: {
-                                    position: 'bottom',
-                                    labels: {
-                                        usePointStyle: true
-                                    }
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Ocupação',
-                                    fontSize: 16
-                                },
-                                tooltips: {
-                                    mode: 'index',
-                                    intersect: true
+                    })
+                    /*----------------------------------------*/
+                    /*  Occupation History Chart
+                    /*----------------------------------------*/
+                    this.occupation_history_chart = new Chart('occupation-history-chart', {
+                        type: 'line',
+                        options: {
+                            responsive: true,
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    usePointStyle: true
                                 }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Ocupação',
+                                fontSize: 16
+                            },
+                            tooltips: {
+                                mode: 'index',
+                                intersect: true
                             }
-                        }),
-                        /*----------------------------------------*/
-                        /*  Occupation Rate History Chart
-                        /*----------------------------------------*/
-                        this.occupation_rate_history_chart = new Chart('occupation-rate-history-chart', {
-                            type: 'line',
-                            options: {
-                                responsive: true,
-                                legend: {
-                                    position: 'bottom',
-                                    labels: {
-                                        usePointStyle: true
-                                    }
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Taxa de ocupação',
-                                    fontSize: 16
-                                },
-                                tooltips: {
-                                    mode: 'index',
-                                    intersect: true
-                                },
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            min: 0,
-                                            max: 100
-                                        }
-                                    }],
-                                    xAxes: [{
-                                        type: 'time'
-                                    }]
+                        }
+                    })
+                    /*----------------------------------------*/
+                    /*  Occupation Rate History Chart
+                    /*----------------------------------------*/
+                    this.occupation_rate_history_chart = new Chart('occupation-rate-history-chart', {
+                        type: 'line',
+                        options: {
+                            responsive: true,
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    usePointStyle: true
                                 }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Taxa de ocupação',
+                                fontSize: 16
+                            },
+                            tooltips: {
+                                mode: 'index',
+                                intersect: true
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        min: 0,
+                                        max: 100
+                                    }
+                                }],
+                                xAxes: [{
+                                    type: 'time'
+                                }]
                             }
-                        })
+                        }
+                    })
                 },
                 fetchData() {
                     console.log('fetchData')
@@ -634,6 +634,43 @@
                 },
                 fetchHistoryData() {
                     console.log('fetchHistoryData')
+                    let from = null
+                    let to = null
+                    if (this.time_range == 'Custom') {
+                        from = moment(this.custom_from).startOf('day')
+                        to = moment(this.custom_to).endOf('day')
+                    } else {
+                        to = moment()
+                        switch (this.time_range) {
+                            case ('Last 1h'):
+                                from = to.clone().subtract(1, 'hours')
+                                break
+                            case ('Last 3h'):
+                                from = to.clone().subtract(3, 'hours')
+                                break
+                            case ('Last 6h'):
+                                from = to.clone().subtract(6, 'hours')
+                                break
+                            case ('Last 12h'):
+                                from = to.clone().subtract(12, 'hours')
+                                break
+                            case ('Last 24h'):
+                                from = to.clone().subtract(24, 'hours')
+                                break
+                            case ('Last 2d'):
+                                from = to.clone().subtract(2, 'days')
+                                break
+                            case ('Last 7d'):
+                                from = to.clone().subtract(7, 'days')
+                                break
+                            case ('Last 30d'):
+                                from = to.clone().subtract(30, 'days')
+                                break
+                        }
+                    }
+
+                    console.log(from.toJSON(), to.toJSON())
+                    
                     this.loading = true
                     this.clearChartData(this.occupation_history_chart)
                     this.clearChartData(this.occupation_rate_history_chart)
